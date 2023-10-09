@@ -1,4 +1,4 @@
-/* global Handelbars */
+/* global Handlebars, utils, dataSource */ //eslint-disable-line
 
 //ćwiczenie 1 - dodanie referencji i wyświetlenie na stronie w oparciu o szablon
 {
@@ -24,25 +24,28 @@
   function initAction() {
     console.log('initAction start');
     const bookImages = booksList.querySelectorAll('.book__image');
-    
-    
+
     for (let bookImage of bookImages) {
       bookImage.addEventListener('dblclick', function (event) {
         event.preventDefault();
-        console.log('zadziałał addEventListener na elemencie bookImage');
-        bookImage.classList.add('favorite');
         const bookId = bookImage.getAttribute('data-id');
-        favoriteBooks.push(bookId);
-        console.log(favoriteBooks);
-
+        console.log('zadziałał addEventListener na elemencie bookImage');
+        if (!favoriteBooks.includes(bookId)) {
+          bookImage.classList.add('favorite');
+          favoriteBooks.push(bookId);
+          console.log('dodano książkę do ulubiomnych');
+        } else if (favoriteBooks.includes(bookId)) {
+          const indexOfBook = favoriteBooks.indexOf(bookId);
+          favoriteBooks.splice(indexOfBook, 1);
+          bookImage.classList.remove('favorite');
+          console.log('usunięto książkę z ulubionych');
+        }
       });
-
     }
   }
 
   initAction();
-  
-  //ćwiczenie 3 - odlajkowanie favoriteBooks
+
 
   //>>nasłuchiwanie całego kontenera w event delegation; dbclick --> target
 
