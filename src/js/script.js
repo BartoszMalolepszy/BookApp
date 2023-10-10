@@ -23,29 +23,30 @@
   //>>dodanie nasłuchiwacza pętlą na każdą pozycję z książki
   function initAction() {
     console.log('initAction start');
-    const bookImages = booksList.querySelectorAll('.book__image');
+    // const bookImages = booksList.querySelectorAll('.book__image');
 
-    for (let bookImage of bookImages) {
-      bookImage.addEventListener('dblclick', function (event) {
-        event.preventDefault();
-        const bookId = bookImage.getAttribute('data-id');
-        console.log('zadziałał addEventListener na elemencie bookImage');
-        if (!favoriteBooks.includes(bookId)) {
-          bookImage.classList.add('favorite');
-          favoriteBooks.push(bookId);
-          console.log('dodano książkę do ulubiomnych');
-        } else if (favoriteBooks.includes(bookId)) {
-          const indexOfBook = favoriteBooks.indexOf(bookId);
-          favoriteBooks.splice(indexOfBook, 1);
-          bookImage.classList.remove('favorite');
-          console.log('usunięto książkę z ulubionych');
-        }
-      });
-    }
+    booksList.addEventListener('dblclick', function (event) {
+      event.preventDefault();
+      const clickedElement = event.target.offsetParent;
+      const bookImage = clickedElement;
+      const bookId = bookImage.getAttribute('data-id');
+      console.log('zadziałał addEventListener na elemencie bookImage');
+      if (!clickedElement.classList.contains('favorite') &&
+        clickedElement.classList.contains('book__image')) {
+        bookImage.classList.add('favorite');
+        favoriteBooks.push(bookId);
+        console.log('dodano książkę do ulubiomnych');
+      } else if 
+      (clickedElement.classList.contains('favorite')) {
+        clickedElement.classList.remove('favorite');
+        const indexOfBook = favoriteBooks.indexOf(bookId);
+        favoriteBooks.splice(indexOfBook, 1);
+        console.log('usunięto książkę z ulubionych');
+      }
+    });
   }
 
   initAction();
-
 
   //>>nasłuchiwanie całego kontenera w event delegation; dbclick --> target
 
