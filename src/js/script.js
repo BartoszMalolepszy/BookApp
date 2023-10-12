@@ -15,10 +15,12 @@
       booksList.appendChild(generatedDOM);
     }
   }
-  render();
 
-  //ćwiczenie 2 - dodanie podówjego kliknięcia do nowej tablicy favbooks
+  //ćwiczenie 2 - dodanie podwójnego kliknięcia do nowej tablicy favbooks
   const favoriteBooks = [];
+
+  const filters = [];
+  const filtersForm = document.querySelector('.filters');
 
   //>>dodanie nasłuchiwacza pętlą na każdą pozycję z książki
   function initAction() {
@@ -45,10 +47,8 @@
         console.log('usunięto książkę z ulubionych');
       }
     });
-
     // Listener for filters
-    const filters = [];
-    const filtersForm = document.querySelectorAll('.filters');
+    console.log(filtersForm);
 
     filtersForm.addEventListener('click', function (event) {
       if (
@@ -56,25 +56,48 @@
         event.target.type == 'checkbox' &&
         event.target.name == 'filter'
       ) {
-        console.log(filtersForm.target.value); //
+        console.log(event.target.value);
 
         if (event.target.checked) {
-          // if clicked add it to filters array
           filters.push(event.target.value);
-        } else if (!event.target.checked) {
-          // if not, delete
+        } else  {
           filters.splice(filters.indexOf(event.target.value), 1);
         }
       }
       console.log('filters', filters);
+      filterBooks();
     });
-  } // Dodane zamknięcie funkcji initAction
+  }
+  // Zamknięcie funkcji initAction
 
-  //adding filters
+  function filterBooks() {
+    // filter books according to chosen option
+    for (let book of dataSource.books) {
+      let shouldBeHidden = false;
 
-  initAction();
+      for (let filter of filters) {
+        // does chosen filter fits to each book details?
+        if (!book.details[filter]) {
+          shouldBeHidden = true; // if it doesnt fit, stop loop and...
+          break;
+        }
+      }
 
-  //>>nasłuchiwanie całego kontenera w event delegation; dbclick --> target
+      const filteredBooks = document.querySelector(
+        '.book__image[data-id="' + book.id + '"]'
+      ); // ...find book with corect id...
 
-  //https://developer.mozilla.org/en-US/docs/Web/API/Element?retiredLocale=pl
+      if (shouldBeHidden) {
+        filteredBooks.classList.add('hidden'); //  this book class hidden
+      } else if (!shouldBeHidden) {
+        filteredBooks.classList.remove('hidden'); // remove class hidden when filter fits to book
+      }
+    }
+  }
+
+  function init() {
+    render();
+    initAction();
+  }
+  init();
 }
