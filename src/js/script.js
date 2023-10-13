@@ -10,6 +10,8 @@ const booksTemplate = Handlebars.compile(
 
 function render() {
   for (let book of dataSource.books) {
+    console.log('pojdyńcza ksiązka w render:', book);
+    console.log('rating tej książki:', book.rating);
     book.ratingBgc = determineRatingBgc(book.rating);
     book.ratingWidth = book.rating * 10;
 
@@ -18,14 +20,14 @@ function render() {
     booksList.appendChild(generatedDOM);
   }
 }
-const determineRatingBgc = (book) => {
-  if (book.rating < 6) {
+const determineRatingBgc = (rating) => {
+  if (rating < 6) {
     return 'linear - gradient(to bottom, #fefcea 0 %, #f1da36 100 %)';
-  } else if (book.rating > 6 && book.rating <= 8) {
+  } else if (rating > 6 && rating <= 8) {
     return 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
-  } else if (book.rating > 8 && book.rating <= 9) {
+  } else if (rating > 8 && rating <= 9) {
     return 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
-  } else if (book.rating > 9) {
+  } else if (rating > 9) {
     return 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
   }
 };
