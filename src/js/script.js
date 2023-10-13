@@ -107,10 +107,10 @@ function filterBooks() {
       filteredBooks.classList.remove('hidden'); // remove class hidden when filter fits to book
     }
   }
-
-  function init() {
-    render();
-    initAction();
-  }
-  init();
 }
+function init() {
+  render();
+  initAction();
+}
+
+init();
