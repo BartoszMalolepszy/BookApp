@@ -4,6 +4,8 @@
 
 const select = {
   listOfBooks: '.books-list',
+  form: '.filters',
+  bookImage: '.book__image',
 };
 
 const templates = {
@@ -18,6 +20,7 @@ class BooksList {
 
     thisBooksList.favoriteBooks = [];
     thisBooksList.filters = [];
+    thisBooksList.dom = [];
 
     thisBooksList.initData();
     thisBooksList.render();
@@ -33,7 +36,7 @@ class BooksList {
 
   render() {
     // for every book render HTML, DOM element and add it to book list
-    const thisBooksList = this;
+    let thisBooksList = this;
 
     for (let book of thisBooksList.data) {
       console.log('pojdyńcza ksiązka w render:', book);
@@ -73,7 +76,7 @@ class BooksList {
         clickedBook.classList.add('favorite');
         thisBooksList.favoriteBooks.push(bookId);
         console.log(thisBooksList.favoriteBooks);
-      } else  {
+      } else {
         const indexOfBook = thisBooksList.favoriteBooks.indexOf(bookId);
         thisBooksList.favoriteBooks.splice(indexOfBook, 1);
         clickedBook.classList.remove('favorite');
@@ -82,7 +85,6 @@ class BooksList {
     });
 
     thisBooksList.dom.form.addEventListener('click', function (event) {
-      
       // filters, display on website book by checkbox
       if (
         event.target.tagName == 'INPUT' &&
@@ -94,7 +96,7 @@ class BooksList {
         if (event.target.checked) {
           // if clicked add it to filters array
           thisBooksList.filters.push(event.target.value);
-        } else  {
+        } else {
           // if not, delete
           thisBooksList.filters.splice(
             thisBooksList.filters.indexOf(event.target.value),
@@ -123,14 +125,14 @@ class BooksList {
         }
       }
 
-      const filteredBooks = document.querySelector(
+      const booksWithCorectId = document.querySelector(
         '.book__image[data-id="' + book.id + '"]'
       ); // find book with corect id
 
       if (shouldBeHidden) {
-        filteredBooks.classList.add('hidden'); // ... and this book class hidden
+        booksWithCorectId.classList.add('hidden'); // ... and this book class hidden
       } else {
-        filteredBooks.classList.remove('hidden'); // remove class hidden when filter fits to book
+        booksWithCorectId.classList.remove('hidden'); // remove class hidden when filter fits to book
       }
     }
   }
