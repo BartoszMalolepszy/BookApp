@@ -44,8 +44,8 @@ class BooksList {
       const generatedHTML = templates.bookTemplate(book);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
 
-      const booksMenu = document.querySelector(select.listOfBooks);
-      booksMenu.appendChild(generatedDOM);
+      thisBooksList.dom.booksList = document.querySelector(select.listOfBooks);
+      thisBooksList.dom.booksList.appendChild(generatedDOM);
     }
   }
 
@@ -73,7 +73,7 @@ class BooksList {
         clickedBook.classList.add('favorite');
         thisBooksList.favoriteBooks.push(bookId);
         console.log(thisBooksList.favoriteBooks);
-      } else if (thisBooksList.favoriteBooks.includes(bookId)) {
+      } else  {
         const indexOfBook = thisBooksList.favoriteBooks.indexOf(bookId);
         thisBooksList.favoriteBooks.splice(indexOfBook, 1);
         clickedBook.classList.remove('favorite');
@@ -94,7 +94,7 @@ class BooksList {
         if (event.target.checked) {
           // if clicked add it to filters array
           thisBooksList.filters.push(event.target.value);
-        } else if (!event.target.checked) {
+        } else  {
           // if not, delete
           thisBooksList.filters.splice(
             thisBooksList.filters.indexOf(event.target.value),
@@ -129,7 +129,7 @@ class BooksList {
 
       if (shouldBeHidden) {
         filteredBooks.classList.add('hidden'); // ... and this book class hidden
-      } else if (!shouldBeHidden) {
+      } else {
         filteredBooks.classList.remove('hidden'); // remove class hidden when filter fits to book
       }
     }
