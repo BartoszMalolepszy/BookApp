@@ -5,12 +5,12 @@
 const select = {
   listOfBooks: '.books-list',
   form: '.filters',
-  bookImage: '.book__image',
+  bookTemplate: '#template-book',
 };
 
 const templates = {
   bookTemplate: Handlebars.compile(
-    document.querySelector('#template-book').innerHTML
+    document.querySelector(select.bookTemplate).innerHTML
   ),
 };
 
@@ -55,7 +55,7 @@ class BooksList {
 
     thisBooksList.dom = {};
     thisBooksList.dom.booksList = document.querySelector(select.listOfBooks);
-    thisBooksList.dom.form = document.querySelector('.filters');
+    thisBooksList.dom.form = document.querySelector(select.form);
   }
 
   initActions() {
@@ -96,10 +96,8 @@ class BooksList {
           thisBooksList.filters.push(event.target.value);
         } else {
           // if not, delete
-          thisBooksList.filters.splice(
-            thisBooksList.filters.indexOf(event.target.value),
-            1
-          );
+          const indexOfFilter = thisBooksList.filters.indexOf(event.target.value);
+          thisBooksList.filters.splice(indexOfFilter, 1);
         }
       }
       console.log('filters', thisBooksList.filters);
@@ -151,4 +149,3 @@ class BooksList {
 
 const app = new BooksList();
 console.log(app);
-
