@@ -36,7 +36,7 @@ class BooksList {
 
   render() {
     // for every book render HTML, DOM element and add it to book list
-    let thisBooksList = this;
+    const thisBooksList = this;
 
     for (let book of thisBooksList.data) {
       console.log('pojdyńcza ksiązka w render:', book);
@@ -125,14 +125,14 @@ class BooksList {
         }
       }
 
-      const booksWithCorectId = document.querySelector(
+      const toggledClassToBooks = document.querySelector(
         '.book__image[data-id="' + book.id + '"]'
       ); // find book with corect id
 
       if (shouldBeHidden) {
-        booksWithCorectId.classList.add('hidden'); // ... and this book class hidden
+        toggledClassToBooks.classList.add('hidden'); // ... and this book class hidden
       } else {
-        booksWithCorectId.classList.remove('hidden'); // remove class hidden when filter fits to book
+        toggledClassToBooks.classList.remove('hidden'); // remove class hidden when filter fits to book
       }
     }
   }
